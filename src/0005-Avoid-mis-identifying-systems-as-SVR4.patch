@@ -1,9 +1,9 @@
-From 47ccb5ecfc87bd9c5cde96b51125cdcb45212aa8 Mon Sep 17 00:00:00 2001
-From: Maarten ter Huurne <maarten@treewalker.org>
-Date: Sun, 14 Sep 2014 11:16:58 +0200
-Subject: [PATCH] Avoid mis-identifying systems as SVR4
+From 79afb676904653403145fda9e1a6a9d3ea1cb22a Mon Sep 17 00:00:00 2001
+From: Jussi Kukkonen <jussi.kukkonen@intel.com>
+Date: Fri, 7 Aug 2015 11:10:32 +0300
+Subject: [PATCH 4/4] Avoid mis-identifying systems as SVR4
 
-My openSUSE 13.1 Linux system was detected as SVR4 because it had
+Linux can be misdetected as SVR4 because it has
 libelf installed. This leads to linking with libelf, even though no
 symbols from that library were actually used, and to a workaround for
 a buggy getlogin() being enabled.
@@ -12,16 +12,20 @@ It is not documented which exact SVR4 system had the bug that the
 workaround was added for, so all I could do is make an educated guess
 at the #defines its compiler would be likely to set.
 
-Signed-off-by: Maarten ter Huurne <maarten@treewalker.org>
+Modified from patch by Maarten ter Huurne.
+
+Upstream-Status: Submitted [http://savannah.gnu.org/bugs/?43223]
+
+Signed-off-by: Jussi Kukkonen <jussi.kukkonen@intel.com>
 ---
- src/configure.in | 14 ++++++++++++--
+ configure.ac | 14 ++++++++++++--
  1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/src/configure.in b/src/configure.in
-index 79aa56d..1a99446 100644
---- a/src/configure.in
-+++ b/src/configure.in
-@@ -178,14 +178,24 @@ AC_EGREP_CPP(yes,
+diff --git a/configure.ac b/configure.ac
+index dc928ae..65439ce 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -179,14 +179,24 @@ AC_EGREP_CPP(yes,
  #endif
  ], LIBS="$LIBS -lsocket -linet";seqptx=1)
  
@@ -49,5 +53,5 @@ index 79aa56d..1a99446 100644
  
  AC_CHECKING(for Solaris 2.x)
 -- 
-1.8.4.5
+2.1.4
 

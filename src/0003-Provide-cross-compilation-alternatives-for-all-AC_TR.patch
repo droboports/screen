@@ -1,19 +1,22 @@
-From 34175e6ed14d869d1deb2bc692d054760aa35230 Mon Sep 17 00:00:00 2001
-From: Maarten ter Huurne <maarten@treewalker.org>
-Date: Sat, 13 Sep 2014 12:04:41 +0200
-Subject: [PATCH] Provide cross compilation alternatives for all AC_TRY_RUN
- uses
+From cd0f7f10a3fffbc60fe55eb200474d13fe1da65b Mon Sep 17 00:00:00 2001
+From: Jussi Kukkonen <jussi.kukkonen@intel.com>
+Date: Fri, 7 Aug 2015 10:34:29 +0300
+Subject: [PATCH 2/4] Provide cross compile alternatives for AC_TRY_RUN
 
-Signed-off-by: Maarten ter Huurne <maarten@treewalker.org>
+Modified from patch by Maarten ter Huurne.
+
+Upstream-Status: Submitted [http://savannah.gnu.org/bugs/?43223]
+
+Signed-off-by: Jussi Kukkonen <jussi.kukkonen@intel.com>
 ---
- src/configure.in | 30 +++++++++++++++++++-----------
- 1 file changed, 19 insertions(+), 11 deletions(-)
+ configure.ac | 32 ++++++++++++++++++++------------
+ 1 file changed, 20 insertions(+), 12 deletions(-)
 
-diff --git a/src/configure.in b/src/configure.in
-index ff9606d..d53a079 100644
---- a/src/configure.in
-+++ b/src/configure.in
-@@ -347,7 +347,8 @@ main()
+diff --git a/configure.ac b/configure.ac
+index 27690a6..ce89f56 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -348,7 +348,8 @@ main()
    exit(0);
  }
  ], AC_NOTE(- your fifos are usable) fifo=1,
@@ -23,7 +26,7 @@ index ff9606d..d53a079 100644
  rm -f /tmp/conftest*
  
  if test -n "$fifo"; then
-@@ -395,7 +396,8 @@ main()
+@@ -396,7 +397,8 @@ main()
    exit(0);
  }
  ], AC_NOTE(- your implementation is ok), 
@@ -33,7 +36,7 @@ index ff9606d..d53a079 100644
  rm -f /tmp/conftest*
  fi
  
-@@ -457,7 +459,8 @@ main()
+@@ -458,7 +460,8 @@ main()
    exit(0);
  }
  ], AC_NOTE(- your sockets are usable) sock=1,
@@ -43,7 +46,7 @@ index ff9606d..d53a079 100644
  rm -f /tmp/conftest*
  
  if test -n "$sock"; then
-@@ -496,7 +499,8 @@ main()
+@@ -497,7 +500,8 @@ main()
  }
  ],AC_NOTE(- you are normal),
  AC_NOTE(- unix domain sockets are not kept in the filesystem)
@@ -53,7 +56,7 @@ index ff9606d..d53a079 100644
  rm -f /tmp/conftest*
  fi
  
-@@ -623,7 +627,8 @@ main()
+@@ -624,7 +628,8 @@ main()
    exit(0);
  }
  ],AC_NOTE(- select is ok),
@@ -63,7 +66,7 @@ index ff9606d..d53a079 100644
  
  dnl
  dnl    ****  termcap or terminfo  ****
-@@ -665,7 +670,8 @@ main()
+@@ -666,7 +671,8 @@ main()
  {
   exit(strcmp(tgoto("%p1%d", 0, 1), "1") ? 0 : 1);
  }], AC_NOTE(- you use the termcap database),
@@ -73,7 +76,7 @@ index ff9606d..d53a079 100644
  AC_CHECKING(ospeed)
  AC_TRY_LINK(extern short ospeed;,ospeed=5;,,AC_DEFINE(NEED_OSPEED))
  
-@@ -800,7 +806,8 @@ main()
+@@ -801,7 +807,8 @@ main()
      else
        AC_NOTE(- can't determine - assume ptys are world accessable)
      fi
@@ -83,7 +86,7 @@ index ff9606d..d53a079 100644
  )
  rm -f conftest_grp
  fi
-@@ -884,7 +891,7 @@ AC_EGREP_CPP(yes,
+@@ -885,7 +892,7 @@ AC_EGREP_CPP(yes,
  #endif
  ], load=1)
  fi
@@ -92,7 +95,7 @@ index ff9606d..d53a079 100644
  AC_CHECKING(for kernelfile)
  for core in /unix /vmunix /dynix /hp-ux /xelos /dev/ksyms /kernel/unix /kernel/genunix /unicos /mach /netbsd /386bsd /dgux /bsd /stand/vmunix; do
    if test -f $core || test -c $core; then
-@@ -1077,7 +1084,7 @@ main()
+@@ -1078,7 +1085,7 @@ main()
  #endif
    exit(0);
  }
@@ -101,7 +104,7 @@ index ff9606d..d53a079 100644
  
  fi
  
-@@ -1157,7 +1164,7 @@ main() {
+@@ -1158,7 +1165,7 @@ main() {
    if (strncmp(buf, "cdedef", 6))
      exit(1);
    exit(0); /* libc version works properly.  */
@@ -110,7 +113,7 @@ index ff9606d..d53a079 100644
  
  AC_TRY_RUN([
  #define bcopy(s,d,l) memmove(d,s,l)
-@@ -1172,7 +1179,8 @@ main() {
+@@ -1173,7 +1180,8 @@ main() {
    if (strncmp(buf, "cdedef", 6))
      exit(1);
    exit(0); /* libc version works properly.  */
@@ -118,8 +121,8 @@ index ff9606d..d53a079 100644
 +}], AC_DEFINE(USEMEMMOVE),,
 +  AC_NOTE(- skipping check because we are cross compiling; use memmove) AC_DEFINE(USEMEMMOVE))
  
- AC_SYS_LONG_FILE_NAMES
  
+ AC_TRY_RUN([
 -- 
-1.8.4.5
+2.1.4
 

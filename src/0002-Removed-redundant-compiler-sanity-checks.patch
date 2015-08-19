@@ -1,21 +1,25 @@
-From 2e6ddd8f732703436083d7924a9f736068c1deaa Mon Sep 17 00:00:00 2001
-From: Maarten ter Huurne <maarten@treewalker.org>
-Date: Sat, 13 Sep 2014 10:27:27 +0200
-Subject: [PATCH] Removed redundant compiler sanity checks
+From 73b726c25f94c1b15514ed9249b927afdfbbfb94 Mon Sep 17 00:00:00 2001
+From: Jussi Kukkonen <jussi.kukkonen@intel.com>
+Date: Fri, 7 Aug 2015 10:30:40 +0300
+Subject: [PATCH 1/4] Remove redundant compiler sanity checks
 
 AC_PROG_CC already performs sanity checks. And unlike the removed
 checks, it does so in a way that supports cross compilation.
 
-Signed-off-by: Maarten ter Huurne <maarten@treewalker.org>
+Modified from patch by Maarten ter Huurne.
+
+Upstream-Status: Submitted [http://savannah.gnu.org/bugs/?43223]
+
+Signed-off-by: Jussi Kukkonen <jussi.kukkonen@intel.com>
 ---
- src/configure.in | 27 ---------------------------
+ configure.ac | 27 ---------------------------
  1 file changed, 27 deletions(-)
 
-diff --git a/src/configure.in b/src/configure.in
-index 576d222..ff9606d 100644
---- a/src/configure.in
-+++ b/src/configure.in
-@@ -47,31 +47,6 @@ AC_PROG_GCC_TRADITIONAL
+diff --git a/configure.ac b/configure.ac
+index ffe2e37..27690a6 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -48,31 +48,6 @@ AC_PROG_GCC_TRADITIONAL
  AC_ISC_POSIX
  AC_USE_SYSTEM_EXTENSIONS
  
@@ -47,7 +51,7 @@ index 576d222..ff9606d 100644
  AC_PROG_AWK
  
  AC_PROG_INSTALL
-@@ -1283,8 +1258,6 @@ fi
+@@ -1300,8 +1275,6 @@ fi
  dnl Ptx bug workaround -- insert -lc after -ltermcap
  test -n "$seqptx" && LIBS="-ltermcap -lc -lsocket -linet -lnsl -lsec -lseq"
  
@@ -57,5 +61,5 @@ index 576d222..ff9606d 100644
  AC_MSG_CHECKING(for the global screenrc file)
  AC_ARG_WITH(sys-screenrc, [  --with-sys-screenrc=path to the global screenrc file], [ ETCSCREENRC="${withval}" ])
 -- 
-1.8.4.5
+2.1.4
 
